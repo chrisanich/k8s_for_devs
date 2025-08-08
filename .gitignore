@@ -1,0 +1,13 @@
+# Ignore system files.
+.DS_Store
+Thumbs.db
+
+# Ignore temp or log files.
+*.log
+*.tmp
+
+# Ignore secrets or configs if added accidentally.
+*.env
+*.secret
+kubeconfig.yaml
+secrets/
