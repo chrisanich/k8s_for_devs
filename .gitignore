@@ -11,3 +11,4 @@ Thumbs.db
 *.secret
 kubeconfig.yaml
 secrets/
+kind/persistent_nodes_data/cp_persistent_data/.kube/config
