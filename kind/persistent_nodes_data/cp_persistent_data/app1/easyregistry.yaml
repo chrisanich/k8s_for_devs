@@ -11,7 +11,7 @@ items:
       io.kompose.service: nginx
     name: nginx
   spec:
-    type: NodePort # <-- New Line: Without this line, the Nginx service is deficed as a ClusterIP service (default type), which means it will only be accessible withing the cluster. If you want to access Nginx from outside (e.g., for testing),you should change the service type to NodePort or LoadBalancer.
+    type: NodePort
     ports:
     - name: "443"
       port: 443
@@ -31,8 +31,7 @@ items:
       io.kompose.service: registry
     name: registry
   spec:
-   #clusterIP: 10.97.40.62 <-- Commented line: The registry service is defined as a ClusterIP service. If you want to push/pull images to/from the registry from outside the cluster, you should change its type to NodePort or LoadBalancer.
-    type: NodePort # <-- New line: NodePort to push/pull images to/from the registry from outside the cluster.
+    type: NodePort
     ports:
     - name: "5000"
       port: 5000
@@ -87,12 +86,13 @@ items:
       io.kompose.service: nginx-claim0
     name: nginx-claim0
   spec:
+    storageClassName: manual
     accessModes:
     - ReadWriteOnce
     resources:
       requests:
         storage: 100Mi
-    volumeName: vol2 # <-- New Line: Explicitely bind to vol2
+    volumeName: vol2
   status: {}
 - apiVersion: apps/v1
   kind: Deployment
@@ -125,7 +125,6 @@ items:
           name: registry
           ports:
           - containerPort: 5000
-            # hostIP: 127.0.0.1 # Commented line: This is unnecessary ad invalid in Kubernetes.
           resources: {}
           volumeMounts:
           - mountPath: /data
@@ -144,20 +143,22 @@ items:
       io.kompose.service: registry-claim0
     name: registry-claim0
   spec:
+    storageClassName: manual  # Added storageClassName to match the PV
     accessModes:
     - ReadWriteOnce
     resources:
       requests:
         storage: 100Mi
-    volumeName: vol1 # <-- New Line: Explicitly bind to vol1
+    volumeName: vol1
   status: {}
 - apiVersion: v1
   kind: PersistentVolume
   metadata:
     labels:
       type: local
-    name: vol1 
+    name: vol1
   spec:
+    storageClassName: manual
     accessModes:
     - ReadWriteOnce
     capacity:
@@ -172,6 +173,7 @@ items:
       type: local
     name: vol2
   spec:
+    storageClassName: manual
     accessModes:
     - ReadWriteOnce
     capacity:
@@ -181,3 +183,4 @@ items:
     persistentVolumeReclaimPolicy: Retain
 kind: List
 metadata: {}
+
