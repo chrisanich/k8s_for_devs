@@ -1,9 +1,24 @@
-# kind-config.yaml
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
-- role: control-plane
-- role: worker
-- role: worker
-- role: worker
+  - role: control-plane
+    image: kind-node:latest
+    extraMounts:
+      - hostPath: /lab/px/k8s_for_devs/kind/persistent_nodes_data/cp_persistent_data
+        containerPath: /persistent
+  - role: worker
+    image: kind-node:latest
+    extraMounts:
+      - hostPath: /lab/px/k8s_for_devs/kind/persistent_nodes_data/worker_persistent_data
+        containerPath: /persistent
+  - role: worker
+    image: kind-node:latest
+    extraMounts:
+      - hostPath: /lab/px/k8s_for_devs/kind/persistent_nodes_data/worker2_persistent_data
+        containerPath: /persistent
+  - role: worker
+    image: kind-node:latest
+    extraMounts:
+      - hostPath: /lab/px/k8s_for_devs/kind/persistent_nodes_data/worker3_persistent_data
+        containerPath: /persistent
 
