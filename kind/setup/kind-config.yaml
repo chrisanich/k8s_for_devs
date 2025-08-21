@@ -5,20 +5,19 @@ nodes:
     image: kind-node:latest
     extraMounts:
       - hostPath: /lab/px/k8s_for_devs/kind/persistent_nodes_data/cp_persistent_data
-        containerPath: /persistent
+        containerPath: /home/anich/
   - role: worker
     image: kind-node:latest
     extraMounts:
       - hostPath: /lab/px/k8s_for_devs/kind/persistent_nodes_data/worker_persistent_data
-        containerPath: /persistent
+        containerPath: /home/anich/
   - role: worker
     image: kind-node:latest
     extraMounts:
       - hostPath: /lab/px/k8s_for_devs/kind/persistent_nodes_data/worker2_persistent_data
-        containerPath: /persistent
+        containerPath: /home/anich/
   - role: worker
     image: kind-node:latest
     extraMounts:
       - hostPath: /lab/px/k8s_for_devs/kind/persistent_nodes_data/worker3_persistent_data
-        containerPath: /persistent
-
+        containerPath: /home/anich/
